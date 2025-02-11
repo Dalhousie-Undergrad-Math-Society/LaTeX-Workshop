@@ -1,0 +1,145 @@
+\documentclass{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts, lipsum, hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+
+\topmargin=-0.5in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\linespread{1.1}
+
+\title{
+    \textbf{Polynomials, Powerful Tangents, and Permutations}
+    \author{Peter Piper}
+}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+
+\begin{document}
+\maketitle
+\pagebreak
+
+\section*{Problem 1}
+\textit{Given real numbers, $a,b,c \in \mathbb{R},$ the polynomial \[g(x) = x^3 + ax^2 + x + 10,\] is such that all of its roots are also roots of the polynomial \[
+f(x) = x^4 + x^3 + bx^2 + 100x + c.
+\] What is $f(1)$? (2017 AMC 12A Problem 23)}
+
+
+\textbf{Claim:} $f(1) = -7007$
+\begin{proof}
+    Let $r_1, r_2, r_3$ be the roots of $g(x)$, and  $r_4$ be the additional root of $f(x)$. By Vieta's Formulas, we have that  
+    \begin{align*}
+        r_1 + r_2+r_3 &= -a\\
+        r_1+r_2+r_3+r_4 &= -1
+    \end{align*}
+    so we know that $r_4 = a - 1$.
+
+    Vieta's formulas also tell us that 
+    \begin{align*}
+        r_1 r_2 r_3 &= -10\\
+        r_1 r_2 + r_2 r_3 + r_3 r_1 &= 1\\ 
+        r_1r_2r_3 + r_2r_3r_4 + r_2r_4r_1 &= -100 \label{eq:1}\tag{$\star$}
+    \end{align*}
+Substituting $r_1r_2r_3 = -10$ into \ref{eq:1} gives us that \[
+    -10 + (r_1r_2 + r_2r_3 + r_3r_1)r_4 = -10 + r_4 = -100.
+    \] Then $r_4 = 90$, so $a = 89$.
+
+    By factoring  $f(x)$ in terms of  $g(x)$, we get  \[
+    f(x) = (x-r_4)g(x) = \left(x + 90\right) g(x)
+    \] 
+    Then since $g(1) = -77$,  $f(1) = 91 \cdot -77 = -7007$, as desired.
+\end{proof}
+
+\pagebreak
+
+\section*{Problem 2}
+\textit{There is a unique $\theta$ between  $0^\circ$ and $90^\circ$ such that for nonnegative  $n \in \mathbb{Z}$, $\tan(2^n \theta)$ is positive if and only if  $n \equiv_3 0$. If  $\theta = \frac{p}{q}$ for two relatively prime integers, find  $p + q$. (2019 AIME II Problem 10)}
+
+\begin{proof}
+    Note that if $\tan(\theta)$ is positive, then $0^\circ < \theta < 90^\circ \mod{180}$. Furthermore, it must also hold that \[
+        2^0 \theta \equiv 2^3 \theta \equiv 2^6 \theta \equiv \dots \mod{180}
+    \] as if it did not, the terminal angle would shift out of the first quadrant.
+
+    Then, $2^3 \theta \equiv 2^0 \theta$ so  $7 \theta \equiv 0^\circ \mod{180}$ Thus, $\theta$ must be one of  \[
+        \frac{180^\circ}{7}, \quad \frac{360^\circ}{7}, \quad \frac{540^\circ}{7}.
+    \] The only value of these three that works is $\theta = \frac{540^\circ}{7}$, and these two integers are already coprime, so our answer is $547$.
+\end{proof}
+
+\pagebreak
+
+\section*{Problem 3}
+\textit{Prove the Hockey-Stick Identity, \[
+        \sum^n_{i = r} \binom{i}{r} = \binom{n+1}{r+1}
+\] for all $n, r \in  \mathbb{N}, n > r$}
+
+\begin{proof}
+    Let $n = r$. Then we have that 
+     \[
+         \sum_{i=r}^{n} \binom{i}{r} = \sum^r_{i=r} \binom{i}{r} = \binom{r}{r} = 1 = \binom{r+1}{r+1}.
+    \] 
+    Then let $k \in \mathbb{N}$ such that $k > r$ and  \[
+        \sum_{i = r}^{k} \binom{i}{r} = \binom{k+1}{r+1}.
+    \] Then we have
+    \begin{align*}
+        \sum^{k+1}_{i=r} \binom{i}{r} &= \left( \sum^k_{i=r} \binom{i}{r} \right) + \binom{k+1}{r}\\
+    &= \binom{k+1}{r+1} + \binom{k+1}{r} \\ 
+    &= \binom{k+2}{r+1}
+    \end{align*} as desired.
+    
+\end{proof}
+\pagebreak
+
+\section*{Problem 4}
+\textit{Find the eigenvalues and eigenvectors of \[
+        A = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix} 
+\] over $\mathbb{C}$. Diagonalize if possible.}
+
+\begin{proof}
+    The characteristic polynomial of $A$ is $\lambda^2 + 1$. This has roots in $\mathbb{C}$, being  $\lambda = \pm i$. We now solve for the eigenvectors.
+
+    \textbf{Case 1: $\lambda = i$} 
+
+    We solve $(A - iI)v = 0.$ 
+
+        \[
+            \begin{bmatrix}[cc | c]
+                -i & -1 &  0\\ 
+                1 & -i & 0 \\
+            \end{bmatrix} 
+            \simeq 
+            \begin{bmatrix}[c c | c]
+                1 & -i & 0 \\ 
+                -i & -1 & 0
+            \end{bmatrix} 
+            \simeq 
+            \begin{bmatrix}[c c | c]
+                1 & -i & 0 \\ 
+                0 & 0 & 0 \\
+            \end{bmatrix} 
+        \] Thus, our eigenvector for $\lambda = -i$ is  \[
+        v_1 = \begin{bmatrix} 
+            i \\ 
+            1
+        \end{bmatrix}. 
+        \] 
+
+        We solve for $\lambda = i$ similarly to find  \[
+        v_2 = \begin{bmatrix} -i \\ i  \end{bmatrix}.
+        \] 
+
+        Then since we have two linearly independent eigenvectors, $A$ is diagonalizable and  $A = P^{-1} D P $ where  \[
+            P = \begin{bmatrix} i & -i \\ 1 & 1 \end{bmatrix} \quad D = \begin{bmatrix} i & 0 \\ 0 & -i \end{bmatrix}.
+        \] 
+    
+\end{proof}
+
+\end{document}
